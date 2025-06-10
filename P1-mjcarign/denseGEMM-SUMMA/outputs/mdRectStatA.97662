@@ -1,0 +1,17 @@
+rm -rf obj main
+mkdir -p obj
+mpicc -Wall -O3 -I./include -c src/main.c -o obj/main.o
+mpicc -Wall -O3 -I./include -c src/summa_opts.c -o obj/summa_opts.o
+mpicc -Wall -O3 -I./include -c src/utils.c -o obj/utils.o
+mpicc obj/main.o obj/summa_opts.o obj/utils.o -o main -lm
+mpirun -np 16 ./main -m 32768 -n 32768 -k 128 -s a -v -p
+
+Matrix Dimensions:
+A: 32768 x 128
+B: 128 x 32768
+C: 32768 x 32768
+Grid size: 4 x 4
+Block size: 32
+Algorithm: Stationary a
+Verbose: true
+Time elapsed: 7.658725 seconds
